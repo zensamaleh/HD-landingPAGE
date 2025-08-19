@@ -13,6 +13,7 @@ import {
   NavbarLogo,
   NavbarButton
 } from "./navbar"
+import { RainbowButton } from "./rainbow-button"
 
 const AnimatedNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
