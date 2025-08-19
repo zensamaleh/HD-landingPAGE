@@ -175,7 +175,7 @@ export default function ShaderShowcase() {
         </div>
       </header>
 
-      <main className="absolute bottom-16 left-8 z-20 max-w-lg">
+      <main className="absolute bottom-24 left-8 z-20 max-w-lg">
         <div className="text-left">
           <div
             className="inline-flex items-center px-3 py-1 rounded-full bg-white/5 backdrop-blur-sm mb-4 relative"
