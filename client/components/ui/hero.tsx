@@ -180,9 +180,9 @@ export default function ShaderShowcase() {
             <button className="px-8 py-3 rounded-full bg-transparent border border-white/30 text-white font-normal text-xs transition-all duration-200 hover:bg-white/10 hover:border-white/50 cursor-pointer">
               Pricing
             </button>
-            <button className="px-8 py-3 rounded-full bg-white text-black font-normal text-xs transition-all duration-200 hover:bg-white/90 cursor-pointer">
+            <RainbowButton className="text-white font-normal text-xs">
               Get Started
-            </button>
+            </RainbowButton>
           </div>
         </div>
       </main>
