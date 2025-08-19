@@ -212,7 +212,7 @@ export default function ShaderShowcase() {
         </div>
       </main>
 
-      <div className="absolute bottom-16 right-8 z-30">
+      <div className="absolute bottom-24 right-8 z-30">
         <div className="relative w-20 h-20 flex items-center justify-center">
           {/* Pulsing Border Circle */}
           <PulsingBorder
