@@ -1,7 +1,7 @@
-"use client"
-import { useEffect, useRef, useState } from "react"
-import { MeshGradient, PulsingBorder } from "@paper-design/shaders-react"
-import { motion } from "framer-motion"
+"use client";
+import { useEffect, useRef, useState } from "react";
+import { MeshGradient, PulsingBorder } from "@paper-design/shaders-react";
+import { motion } from "framer-motion";
 import {
   Navbar,
   NavBody,
@@ -11,9 +11,9 @@ import {
   MobileNavMenu,
   MobileNavToggle,
   NavbarLogo,
-  NavbarButton
-} from "./navbar"
-import { RainbowButton } from "./rainbow-button"
+  NavbarButton,
+} from "./navbar";
+import { RainbowButton } from "./rainbow-button";
 
 const AnimatedNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +43,10 @@ const AnimatedNavbar = () => {
           <MobileNavHeader className="px-4 py-3">
             <NavbarLogo />
             <div className="text-white">
-              <MobileNavToggle isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+              <MobileNavToggle
+                isOpen={isOpen}
+                onClick={() => setIsOpen(!isOpen)}
+              />
             </div>
           </MobileNavHeader>
           <MobileNavMenu
@@ -72,32 +75,41 @@ const AnimatedNavbar = () => {
 };
 
 export default function ShaderShowcase() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [isActive, setIsActive] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    const handleMouseEnter = () => setIsActive(true)
-    const handleMouseLeave = () => setIsActive(false)
+    const handleMouseEnter = () => setIsActive(true);
+    const handleMouseLeave = () => setIsActive(false);
 
-    const container = containerRef.current
+    const container = containerRef.current;
     if (container) {
-      container.addEventListener("mouseenter", handleMouseEnter)
-      container.addEventListener("mouseleave", handleMouseLeave)
+      container.addEventListener("mouseenter", handleMouseEnter);
+      container.addEventListener("mouseleave", handleMouseLeave);
     }
 
     return () => {
       if (container) {
-        container.removeEventListener("mouseenter", handleMouseEnter)
-        container.removeEventListener("mouseleave", handleMouseLeave)
+        container.removeEventListener("mouseenter", handleMouseEnter);
+        container.removeEventListener("mouseleave", handleMouseLeave);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-black relative overflow-hidden">
+    <div
+      ref={containerRef}
+      className="min-h-screen bg-black relative overflow-hidden"
+    >
       <svg className="absolute inset-0 w-0 h-0">
         <defs>
-          <filter id="glass-effect" x="-50%" y="-50%" width="200%" height="200%">
+          <filter
+            id="glass-effect"
+            x="-50%"
+            y="-50%"
+            width="200%"
+            height="200%"
+          >
             <feTurbulence baseFrequency="0.005" numOctaves="1" result="noise" />
             <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.3" />
             <feColorMatrix
@@ -109,7 +121,13 @@ export default function ShaderShowcase() {
               result="tint"
             />
           </filter>
-          <filter id="gooey-filter" x="-50%" y="-50%" width="200%" height="200%">
+          <filter
+            id="gooey-filter"
+            x="-50%"
+            y="-50%"
+            width="200%"
+            height="200%"
+          >
             <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
             <feColorMatrix
               in="blur"
@@ -126,7 +144,13 @@ export default function ShaderShowcase() {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient
+            id="logo-gradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
             <stop offset="0%" stopColor="#8b5cf6" />
             <stop offset="50%" stopColor="#ffffff" />
             <stop offset="100%" stopColor="#4c1d95" />
@@ -159,20 +183,26 @@ export default function ShaderShowcase() {
             }}
           >
             <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full" />
-            <span className="text-white/90 text-xs font-light relative z-10">✨ New Paper Shaders Experience</span>
+            <span className="text-white/90 text-xs font-light relative z-10">
+              ✨ New Paper Shaders Experience
+            </span>
           </div>
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-6xl md:leading-16 tracking-tight font-light text-white mb-4">
-            <span className="font-medium italic instrument">Beautiful</span> Shader
+            <span className="font-medium italic instrument">Beautiful</span>{" "}
+            Shader
             <br />
-            <span className="font-light tracking-tight text-white">Experiences</span>
+            <span className="font-light tracking-tight text-white">
+              Experiences
+            </span>
           </h1>
 
           {/* Description */}
           <p className="text-xs font-light text-white/70 mb-4 leading-relaxed">
-            Create stunning visual experiences with our advanced shader technology. Interactive lighting, smooth
-            animations, and beautiful effects that respond to your every move.
+            Create stunning visual experiences with our advanced shader
+            technology. Interactive lighting, smooth animations, and beautiful
+            effects that respond to your every move.
           </p>
 
           {/* Buttons */}
@@ -191,7 +221,15 @@ export default function ShaderShowcase() {
         <div className="relative w-20 h-20 flex items-center justify-center">
           {/* Pulsing Border Circle */}
           <PulsingBorder
-            colors={["#BEECFF", "#E77EDC", "#FF4C3E", "#00FF88", "#FFD700", "#FF6B35", "#8A2BE2"]}
+            colors={[
+              "#BEECFF",
+              "#E77EDC",
+              "#FF4C3E",
+              "#00FF88",
+              "#FFD700",
+              "#FF6B35",
+              "#8A2BE2",
+            ]}
             colorback="#00000000"
             speed={1.5}
             roundness={1}
@@ -226,16 +264,20 @@ export default function ShaderShowcase() {
             style={{ transform: "scale(1.6)" }}
           >
             <defs>
-              <path id="circle" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
+              <path
+                id="circle"
+                d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"
+              />
             </defs>
             <text className="text-sm fill-white/80 instrument">
               <textPath href="#circle" startOffset="0%">
-                Loxt - Mozzi • 21st.dev is amazing • 21st.dev is amazing • Loxt-MoZzI •
+                Loxt - Mozzi • 21st.dev is amazing • 21st.dev is amazing •
+                Loxt-MoZzI •
               </textPath>
             </text>
           </motion.svg>
         </div>
       </div>
     </div>
-  )
+  );
 }
