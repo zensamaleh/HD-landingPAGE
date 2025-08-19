@@ -23,6 +23,8 @@
   "dependencies": {
     "@paper-design/shaders-react": "^0.0.46",
     "@tabler/icons-react": "^3.34.1",
+    "@types/canvas-confetti": "^1.9.0",
+    "canvas-confetti": "^1.9.3",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "zod": "^3.25.76"
