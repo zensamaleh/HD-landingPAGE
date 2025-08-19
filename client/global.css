@@ -141,3 +141,9 @@
     background: rgba(255, 255, 255, 0.3);
   }
 }
+
+@layer utilities {
+  .feature-glow {
+    box-shadow: 0 0 20px rgba(var(--primary), 0.3), 0 0 40px rgba(var(--primary), 0.2);
+  }
+}
