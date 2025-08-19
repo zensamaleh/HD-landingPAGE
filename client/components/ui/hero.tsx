@@ -14,6 +14,7 @@ import {
   NavbarButton,
 } from "./navbar";
 import { RainbowButton } from "./rainbow-button";
+import { SaveButton } from "./save-button";
 
 const AnimatedNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,9 +35,13 @@ const AnimatedNavbar = () => {
             className="text-white/80 hover:text-white"
           />
           <div className="flex items-center space-x-4">
-            <button className="px-4 md:px-6 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer">
-              Login
-            </button>
+            <SaveButton
+              text={{
+                idle: "Save me, please!",
+                saving: "Working on it...",
+                saved: "Saved! Woohoo!"
+              }}
+            />
           </div>
         </NavBody>
         <MobileNav className="!bg-black/20 backdrop-blur-sm border border-white/10 mx-4">
@@ -64,9 +69,15 @@ const AnimatedNavbar = () => {
                 {item.name}
               </a>
             ))}
-            <button className="mt-4 px-6 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer w-full">
-              Login
-            </button>
+            <div className="mt-4 w-full">
+              <SaveButton
+                text={{
+                  idle: "Save me, please!",
+                  saving: "Working on it...",
+                  saved: "Saved! Woohoo!"
+                }}
+              />
+            </div>
           </MobileNavMenu>
         </MobileNav>
       </Navbar>
