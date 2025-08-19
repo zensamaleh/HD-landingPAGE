@@ -15,7 +15,6 @@ import {
 } from "./navbar";
 import { RainbowButton } from "./rainbow-button";
 import { SaveButton } from "./save-button";
-import { FeatureStepsDemo } from "../blocks/feature-section-demo";
 
 const AnimatedNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -230,9 +229,6 @@ export default function ShaderShowcase() {
           </div>
         </main>
 
-        <section className="py-20 bg-black/20">
-          <FeatureStepsDemo />
-        </section>
       </div>
 
       <div className="absolute bottom-24 right-8 z-30">
