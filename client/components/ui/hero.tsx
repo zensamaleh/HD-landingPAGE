@@ -14,6 +14,56 @@ import {
   NavbarButton
 } from "./navbar"
 
+const AnimatedNavbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const navItems = [
+    { name: "Features", link: "#features" },
+    { name: "Pricing", link: "#pricing" },
+    { name: "Docs", link: "#docs" },
+  ];
+
+  return (
+    <div className="relative z-20 w-full">
+      <Navbar className="fixed top-0 inset-x-0">
+        <NavBody className="!bg-black/20 backdrop-blur-sm border border-white/10">
+          <NavbarLogo />
+          <NavItems
+            items={navItems}
+            className="text-white/80 hover:text-white"
+          />
+          <div className="flex items-center space-x-4">
+            <button className="px-6 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer">
+              Login
+            </button>
+          </div>
+        </NavBody>
+        <MobileNav className="!bg-black/20 backdrop-blur-sm border border-white/10">
+          <MobileNavHeader>
+            <NavbarLogo />
+            <MobileNavToggle isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+          </MobileNavHeader>
+          <MobileNavMenu isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            {navItems.map((item, idx) => (
+              <a
+                key={idx}
+                href={item.link}
+                className="block px-4 py-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </a>
+            ))}
+            <button className="mt-4 px-6 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer w-full">
+              Login
+            </button>
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
+    </div>
+  );
+};
+
 export default function ShaderShowcase() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isActive, setIsActive] = useState(false)
