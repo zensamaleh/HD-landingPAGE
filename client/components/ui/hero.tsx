@@ -25,30 +25,36 @@ const AnimatedNavbar = () => {
 
   return (
     <div className="relative z-20 w-full">
-      <Navbar className="fixed top-0 inset-x-0">
-        <NavBody className="!bg-black/20 backdrop-blur-sm border border-white/10">
+      <Navbar className="fixed top-0 inset-x-0 px-4 md:px-6">
+        <NavBody className="!bg-black/20 backdrop-blur-sm border border-white/10 !min-w-0">
           <NavbarLogo />
           <NavItems
             items={navItems}
             className="text-white/80 hover:text-white"
           />
           <div className="flex items-center space-x-4">
-            <button className="px-6 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer">
+            <button className="px-4 md:px-6 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer">
               Login
             </button>
           </div>
         </NavBody>
-        <MobileNav className="!bg-black/20 backdrop-blur-sm border border-white/10">
-          <MobileNavHeader>
+        <MobileNav className="!bg-black/20 backdrop-blur-sm border border-white/10 mx-4">
+          <MobileNavHeader className="px-4 py-3">
             <NavbarLogo />
-            <MobileNavToggle isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+            <div className="text-white">
+              <MobileNavToggle isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
+            </div>
           </MobileNavHeader>
-          <MobileNavMenu isOpen={isOpen} onClose={() => setIsOpen(false)}>
+          <MobileNavMenu
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            className="!bg-black/90 border border-white/10"
+          >
             {navItems.map((item, idx) => (
               <a
                 key={idx}
                 href={item.link}
-                className="block px-4 py-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+                className="block px-4 py-3 text-white hover:bg-white/10 rounded-lg transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
