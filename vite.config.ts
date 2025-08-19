@@ -15,9 +15,6 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     outDir: "dist/spa",
-    rollupOptions: {
-      external: ['canvas-confetti']
-    }
   },
   plugins: [react(), expressPlugin()],
   resolve: {

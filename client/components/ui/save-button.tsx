@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Loader2, Check, Sparkles } from "lucide-react"
-import confetti from "canvas-confetti"
 import { cn } from "@/lib/utils"
 import { useTheme } from "next-themes"
 
@@ -44,6 +43,7 @@ export function SaveButton({
         }
         setStatus("saved")
         setBounce(true)
+        const confetti = (await import('canvas-confetti')).default;
         confetti({
           particleCount: 100,
           spread: 70,
