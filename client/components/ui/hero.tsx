@@ -26,145 +26,240 @@ export default function ShaderShowcase() {
   }, [])
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Background Mesh Gradient */}
-      <div className="absolute inset-0 opacity-60">
-        <MeshGradient 
-          speed={2}
-          colors={["#6366f1", "#8b5cf6", "#ec4899", "#06b6d4", "#10b981"]}
-          className="w-full h-full"
-        />
-      </div>
+    <div ref={containerRef} className="min-h-screen bg-black relative overflow-hidden">
+      <svg className="absolute inset-0 w-0 h-0">
+        <defs>
+          <filter id="glass-effect" x="-50%" y="-50%" width="200%" height="200%">
+            <feTurbulence baseFrequency="0.005" numOctaves="1" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.3" />
+            <feColorMatrix
+              type="matrix"
+              values="1 0 0 0 0.02
+                      0 1 0 0 0.02
+                      0 0 1 0 0.05
+                      0 0 0 0.9 0"
+              result="tint"
+            />
+          </filter>
+          <filter id="gooey-filter" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+            <feColorMatrix
+              in="blur"
+              mode="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+              result="gooey"
+            />
+            <feComposite in="SourceGraphic" in2="gooey" operator="atop" />
+          </filter>
+          <filter id="logo-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#8b5cf6" />
+            <stop offset="50%" stopColor="#ffffff" />
+            <stop offset="100%" stopColor="#4c1d95" />
+          </linearGradient>
+        </defs>
+      </svg>
 
-      {/* Grid overlay */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="grid grid-cols-12 gap-1 h-full">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="border-l border-white/10 h-full" />
-          ))}
-        </div>
-      </div>
+      <MeshGradient
+        className="absolute inset-0 w-full h-full"
+        colors={["#000000", "#8b5cf6", "#ffffff", "#1e1b4b", "#4c1d95"]}
+        speed={0.3}
+        backgroundColor="#000000"
+      />
+      <MeshGradient
+        className="absolute inset-0 w-full h-full opacity-60"
+        colors={["#000000", "#ffffff", "#8b5cf6", "#000000"]}
+        speed={0.2}
+        wireframe="true"
+        backgroundColor="transparent"
+      />
 
-      {/* Navigation */}
-      <nav className="relative z-10 flex items-center justify-between p-6 md:p-8">
-        <div className="flex items-center space-x-8">
-          <div className="text-xl font-bold">Paper</div>
-          <div className="hidden md:flex space-x-6">
-            <a href="#" className="text-white/80 hover:text-white transition-colors">
-              Features
-            </a>
-            <a href="#" className="text-white/80 hover:text-white transition-colors">
-              Pricing
-            </a>
-            <a href="#" className="text-white/80 hover:text-white transition-colors">
-              Docs
-            </a>
+      <header className="relative z-20 flex items-center justify-between p-6">
+        <motion.div
+          className="flex items-center group cursor-pointer"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
+          <motion.svg
+            fill="currentColor"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className="size-10 text-white group-hover:drop-shadow-lg transition-all duration-300"
+            style={{
+              filter: "url(#logo-glow)",
+            }}
+            whileHover={{
+              fill: "url(#logo-gradient)",
+              rotate: [0, -2, 2, 0],
+              transition: {
+                fill: { duration: 0.3 },
+                rotate: { duration: 0.6, ease: "easeInOut" },
+              },
+            }}
+          >
+            <motion.path
+              d="M15 85V15h12l18 35 18-35h12v70h-12V35L45 70h-10L17 35v50H15z"
+              initial={{ pathLength: 1 }}
+              whileHover={{
+                pathLength: [1, 0, 1],
+                transition: { duration: 1.2, ease: "easeInOut" },
+              }}
+            />
+          </motion.svg>
+
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white/60 rounded-full"
+                style={{
+                  left: `${20 + Math.random() * 60}%`,
+                  top: `${20 + Math.random() * 60}%`,
+                }}
+                animate={{
+                  y: [-10, -20, -10],
+                  x: [0, Math.random() * 20 - 10, 0],
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Number.POSITIVE_INFINITY,
+                  delay: i * 0.2,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
           </div>
-        </div>
+        </motion.div>
+
+        {/* Navigation */}
+        <nav className="flex items-center space-x-2">
+          <a
+            href="#"
+            className="text-white/80 hover:text-white text-xs font-light px-3 py-2 rounded-full hover:bg-white/10 transition-all duration-200"
+          >
+            Features
+          </a>
+          <a
+            href="#"
+            className="text-white/80 hover:text-white text-xs font-light px-3 py-2 rounded-full hover:bg-white/10 transition-all duration-200"
+          >
+            Pricing
+          </a>
+          <a
+            href="#"
+            className="text-white/80 hover:text-white text-xs font-light px-3 py-2 rounded-full hover:bg-white/10 transition-all duration-200"
+          >
+            Docs
+          </a>
+        </nav>
 
         {/* Login Button Group with Arrow */}
-        <div className="flex items-center space-x-4">
-          <button className="hidden md:flex items-center space-x-2 text-white/80 hover:text-white transition-colors">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="transform rotate-180">
-              <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z" fill="currentColor"/>
+        <div id="gooey-btn" className="relative flex items-center group" style={{ filter: "url(#gooey-filter)" }}>
+          <button className="absolute right-0 px-2.5 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer h-8 flex items-center justify-center -translate-x-10 group-hover:-translate-x-19 z-0">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
             </svg>
           </button>
-          <button className="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg transition-colors">
+          <button className="px-6 py-2 rounded-full bg-white text-black font-normal text-xs transition-all duration-300 hover:bg-white/90 cursor-pointer h-8 flex items-center z-10">
             Login
           </button>
         </div>
-      </nav>
+      </header>
 
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-6 text-center">
-        {/* Badge */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-8 px-4 py-2 bg-white/10 border border-white/20 rounded-full text-sm"
-        >
-          ✨ New Paper Shaders Experience
-        </motion.div>
-
-        {/* Main Heading */}
-        <motion.h1 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-        >
-          Beautiful Shader
-          <br />
-          Experiences
-        </motion.h1>
-
-        {/* Description */}
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg md:text-xl text-white/80 max-w-2xl mb-12 leading-relaxed"
-        >
-          Create stunning visual experiences with our advanced shader technology. Interactive lighting, smooth
-          animations, and beautiful effects that respond to your every move.
-        </motion.p>
-
-        {/* Buttons */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-16"
-        >
-          <button className="px-8 py-3 bg-white text-black font-medium rounded-lg hover:bg-white/90 transition-colors">
-            Get Started
-          </button>
-          <button className="px-8 py-3 border border-white/30 text-white font-medium rounded-lg hover:bg-white/10 transition-colors">
-            Pricing
-          </button>
-        </motion.div>
-
-        {/* Pulsing Border Circle */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="relative"
-        >
-          <div className="w-32 h-32 md:w-40 md:h-40">
-            <PulsingBorder 
-              size={160}
-              strokeWidth={2}
-              color="#ffffff"
-              className="opacity-60"
-            />
+      <main className="absolute bottom-8 left-8 z-20 max-w-lg">
+        <div className="text-left">
+          <div
+            className="inline-flex items-center px-3 py-1 rounded-full bg-white/5 backdrop-blur-sm mb-4 relative"
+            style={{
+              filter: "url(#glass-effect)",
+            }}
+          >
+            <div className="absolute top-0 left-1 right-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full" />
+            <span className="text-white/90 text-xs font-light relative z-10">✨ New Paper Shaders Experience</span>
           </div>
+
+          {/* Main Heading */}
+          <h1 className="text-5xl md:text-6xl md:leading-16 tracking-tight font-light text-white mb-4">
+            <span className="font-medium italic instrument">Beautiful</span> Shader
+            <br />
+            <span className="font-light tracking-tight text-white">Experiences</span>
+          </h1>
+
+          {/* Description */}
+          <p className="text-xs font-light text-white/70 mb-4 leading-relaxed">
+            Create stunning visual experiences with our advanced shader technology. Interactive lighting, smooth
+            animations, and beautiful effects that respond to your every move.
+          </p>
+
+          {/* Buttons */}
+          <div className="flex items-center gap-4 flex-wrap">
+            <button className="px-8 py-3 rounded-full bg-transparent border border-white/30 text-white font-normal text-xs transition-all duration-200 hover:bg-white/10 hover:border-white/50 cursor-pointer">
+              Pricing
+            </button>
+            <button className="px-8 py-3 rounded-full bg-white text-black font-normal text-xs transition-all duration-200 hover:bg-white/90 cursor-pointer">
+              Get Started
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <div className="absolute bottom-8 right-8 z-30">
+        <div className="relative w-20 h-20 flex items-center justify-center">
+          {/* Pulsing Border Circle */}
+          <PulsingBorder
+            colors={["#BEECFF", "#E77EDC", "#FF4C3E", "#00FF88", "#FFD700", "#FF6B35", "#8A2BE2"]}
+            colorBack="#00000000"
+            speed={1.5}
+            roundness={1}
+            thickness={0.1}
+            softness={0.2}
+            intensity={5}
+            spotsPerColor={5}
+            spotSize={0.1}
+            pulse={0.1}
+            smoke={0.5}
+            smokeSize={4}
+            scale={0.65}
+            rotation={0}
+            frame={9161408.251009725}
+            style={{
+              width: "60px",
+              height: "60px",
+              borderRadius: "50%",
+            }}
+          />
 
           {/* Rotating Text Around the Pulsing Border */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-32 h-32 md:w-40 md:h-40">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0"
-              >
-                <svg width="100%" height="100%" viewBox="0 0 160 160" className="text-white/60 text-xs">
-                  <path
-                    id="circle"
-                    d="M 80, 80 m -60, 0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0"
-                    fill="transparent"
-                  />
-                  <text fontSize="11" letterSpacing="2">
-                    <textPath href="#circle" startOffset="0%">
-                      Loxt - Mozzi • 21st.dev is amazing • 21st.dev is amazing • Loxt-MoZzI •
-                    </textPath>
-                  </text>
-                </svg>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
+          <motion.svg
+            className="absolute inset-0 w-full h-full"
+            viewBox="0 0 100 100"
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 20,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "linear",
+            }}
+            style={{ transform: "scale(1.6)" }}
+          >
+            <defs>
+              <path id="circle" d="M 50, 50 m -38, 0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" />
+            </defs>
+            <text className="text-sm fill-white/80 instrument">
+              <textPath href="#circle" startOffset="0%">
+                Loxt - Mozzi • 21st.dev is amazing • 21st.dev is amazing • Loxt-MoZzI •
+              </textPath>
+            </text>
+          </motion.svg>
+        </div>
       </div>
     </div>
   )
